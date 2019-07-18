@@ -6,15 +6,13 @@ local savedNotes = {
 TriggerEvent('server:LoadsNote')
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-ESX.RegisterUsableItem('notepad', function(source)
-  local _source  = source
-  local xPlayer   = ESX.GetPlayerFromId(_source)
-
-  --TriggerClientEvent('lkrp_notepad:note', _source)
-  --TriggerClientEvent('lkrp_notepad:OpenNotepadGui', _source)
-  TriggerClientEvent('esx:showNotification', source, 'Write on chat ~o~/notes')
-  
-end)
+--#Delete comments to use from inventory
+-- ESX.RegisterUsableItem('notepad', function(source)
+--   local _source  = source
+--   local xPlayer   = ESX.GetPlayerFromId(_source)
+--   TriggerClientEvent('lkrp_notepad:note', _source)
+--   TriggerClientEvent('lkrp_notepad:OpenNotepadGui', _source)
+-- end)
 
 TriggerEvent('es:addCommand', 'notes', function(source, args, user)
   local _source = source
