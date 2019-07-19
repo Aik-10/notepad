@@ -38,12 +38,16 @@ window.addEventListener('message', function(e) {
                 document.getElementById("p1").value = "";
                 $("#main").fadeIn();
             }else {
+                $("textarea").removeAttr('disabled','disabled');
+                $("button").fadeIn();
                 document.getElementById("p1").value = ownerdNotepad;
                 $("#main").fadeIn();
             }
             break;
         case 'openNotepadRead':
             notepadreader = true;
+            $("textarea").attr('disabled','disabled');
+            $("button").hide();
             $("#main").fadeIn();
             document.getElementById("p1").value = event.data.TextRead;
             break;
