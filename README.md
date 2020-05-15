@@ -1,7 +1,7 @@
 Fivem Notepad script
 ===================================
 
-Created By Lentokone | discord Lentokone#5742
+Created By Lentokone
 
 ## Pictures
 https://i.imgur.com/hie3acy.png
@@ -10,7 +10,13 @@ https://i.imgur.com/XhMQFIj.jpg
 Install
 ==================
 ### resource
-Add "notepad" to items table
 
-		start lkrp_notepad |to server.cfg
-    
+add to server.cfg
+```
+start lkrp_notepad
+```
+**Add "notepad" to items table**
+SQL Query
+```
+INSERT INTO `items` (`name`, `label`, `limit`, `rare`, `can_remove`, `can_steal`) VALUES ('notepad', 'Notepad', 1, 0, 1, 1)
+```
