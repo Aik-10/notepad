@@ -1,14 +1,15 @@
 ESX = nil
-
 local isUiOpen = false 
 local object = 0
 local TestLocalTable = {}
 local editingNotpadId = nil
 
+local NotepadText = "~g~E~s~ to read,~g~G~s~ to destroy"
+
 Citizen.CreateThread(function()
     while ESX == nil do
         TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-        Citizen.Wait(0)
+        Citizen.Wait(0) -- Delete This
     end
 end)
 
@@ -27,7 +28,6 @@ function DrawText3Ds(x,y,z, text)
     DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, 41, 11, 41, 68)
 
 end
-
 
 RegisterNUICallback('escape', function(data, cb)
     local text = data.text
@@ -158,23 +158,19 @@ Citizen.CreateThread(function()
                 if distance < 10.0 then
                     DrawMarker(27, TestLocalTable[i]["x"],TestLocalTable[i]["y"],TestLocalTable[i]["z"]-0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.2, 2.0, 255, 255,150, 75, 0, 0, 2, 0, 0, 0, 0)
                 end
-
                 if distance < closestNoteDistance then
                   closestNoteDistance = distance
                   closestNoteId = i
                 end
             end
-
             if closestNoteDistance > 100.0 then
                 Citizen.Wait(math.ceil(closestNoteDistance*10))
             end
-
             if TestLocalTable[closestNoteId] ~= nil then
             local distance = GetDistanceBetweenCoords(plyLoc, TestLocalTable[closestNoteId]["x"],TestLocalTable[closestNoteId]["y"],TestLocalTable[closestNoteId]["z"], true)
             if distance < 2.0 then
                 DrawMarker(27, TestLocalTable[closestNoteId]["x"],TestLocalTable[closestNoteId]["y"],TestLocalTable[closestNoteId]["z"]-0.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 2.0, 255, 255, 155, 75, 0, 0, 2, 0, 0, 0, 0)
-                DrawText3Ds(TestLocalTable[closestNoteId]["x"],TestLocalTable[closestNoteId]["y"],TestLocalTable[closestNoteId]["z"]-0.4, "~g~E~s~ to read,~g~G~s~ to destroy")
-
+                DrawText3Ds(TestLocalTable[closestNoteId]["x"],TestLocalTable[closestNoteId]["y"],TestLocalTable[closestNoteId]["z"]-0.4, NotepadText)
                 if IsControlJustReleased(0, 38) then
                     openGuiRead(TestLocalTable[closestNoteId]["text"])
                     editingNotpadId = closestNoteId
@@ -183,14 +179,12 @@ Citizen.CreateThread(function()
                   TriggerServerEvent("server:destroyNote",closestNoteId)
                   table.remove(TestLocalTable,closestNoteId)
                 end
-
             end
           else
             if TestLocalTable[closestNoteId] ~= nil then
               table.remove(TestLocalTable,closestNoteId)
             end
           end 
-
         end
     end 
 end)

@@ -1,7 +1,5 @@
 ESX = nil
-local savedNotes = {
-  
-}
+local savedNotes = {}
 
 TriggerEvent('server:LoadsNote')
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -36,12 +34,7 @@ end)
 
 RegisterNetEvent("server:newNote")
 AddEventHandler("server:newNote", function(text, x, y, z)
-      local import = {
-        ["text"] = ""..text.."",
-        ["x"] = x,
-        ["y"] = y,
-        ["z"] = z,
-      }
+      local import = { ["text"] = ""..text.."", ["x"] = x, ["y"] = y, ["z"] = z }
       table.insert(savedNotes, import)
       TriggerEvent("server:LoadsNote")
 end)

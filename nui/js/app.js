@@ -1,12 +1,10 @@
-var ownerdNotepad;
-var notepadreader;
-
+var ownerdNotepad, notepadreader;
 document.onkeyup = function (data) {
-    if (data.which == 27) { // Escape key
-        $.post('http://lkrp_notepad/escape', JSON.stringify({}));
+    if (data.which == 27) {
+        $.post('http://notepad/escape', JSON.stringify({}));
         if (notepadreader == true) {
-            var x = document.getElementById("p1").value;
-            $.post('http://lkrp_notepad/updating', JSON.stringify({ text: x}));
+            let x = document.getElementById("p1").value;
+            $.post('http://notepad/updating', JSON.stringify({ text: x}));
             $("#main").fadeOut();
             $("#main").css('display', 'none');
             notepadreader = false;
@@ -20,15 +18,13 @@ document.onkeyup = function (data) {
 };
 
 function dropNotepad() {
-    var x = document.getElementById("p1").value;
-    if (x == ""){
-        $.post('http://lkrp_notepad/droppingEmpty', JSON.stringify({}));
-    }else {
-        $.post('http://lkrp_notepad/dropping', JSON.stringify({ text: x}));
+    let x = document.getElementById("p1").value;
+    if (x !== ""){
+        $.post('http://notepad/dropping', JSON.stringify({ text: x}));
         $("#main").fadeOut();
         document.getElementById("p1").value = "";
         $("#main").css('display', 'none');
-    }   
+    }
 }
 
 window.addEventListener('message', function(e) {
