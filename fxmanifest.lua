@@ -13,5 +13,5 @@ ui_page {
 files {
     'nui/ui.html',
     'nui/css/main.css',
-    'mui/js/app.js',
+    'nui/js/app.js',
 }
