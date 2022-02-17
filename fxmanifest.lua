@@ -1,17 +1,14 @@
 fx_version 'adamant'
-games { 'gta5' }
+game 'gta5'
 
-server_scripts {
-    "server/main.lua",
-}
-client_scripts {
-    "client/main.lua",
-}
-ui_page {
-    'nui/ui.html',
-}
+server_script 'server/*.js'
+client_script 'client/*.js'
+
+ui_page 'nui/ui.html'
+
 files {
     'nui/ui.html',
-    'nui/css/main.css',
-    'nui/js/app.js',
+    'nui/css/*.css',
+    'nui/js/*.js',
+    'nui/files/*.svg',
 }

@@ -1,10 +1,10 @@
 var ownerdNotepad, notepadreader;
 document.onkeyup = function (data) {
     if (data.which == 27) {
-        $.post('http://notepad/escape', JSON.stringify({}));
+        $.post(`http://${GetParentResourceName()}/escape`, JSON.stringify({}));
         if (notepadreader == true) {
             let x = document.getElementById("p1").value;
-            $.post('http://notepad/updating', JSON.stringify({ text: x}));
+            $.post(`http://${GetParentResourceName()}/updating`, JSON.stringify({ text: x}));
             $("#main").fadeOut();
             $("#main").css('display', 'none');
             notepadreader = false;
@@ -18,9 +18,10 @@ document.onkeyup = function (data) {
 };
 
 function dropNotepad() {
+    console.log("DROPPING STARTED");
     let x = document.getElementById("p1").value;
     if (x !== ""){
-        $.post('http://notepad/dropping', JSON.stringify({ text: x}));
+        $.post(`http://${GetParentResourceName()}/Drop`, JSON.stringify({ text: x}));
         $("#main").fadeOut();
         document.getElementById("p1").value = "";
         $("#main").css('display', 'none');
@@ -56,7 +57,3 @@ window.addEventListener('message', function(e) {
             break;
     }
 });
-
-
-
-
