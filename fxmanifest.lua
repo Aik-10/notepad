@@ -1,15 +1,14 @@
-fx_version 'adamant'
-games { 'gta5' }
+fx_version 'bodacious'
+game 'gta5'
 
-server_scripts {
-    "server/main.lua",
-}
-client_scripts {
-    "client/main.lua",
-}
+server_script "server/main.lua"
+
+client_script "client/main.lua"
+
 ui_page {
     'nui/ui.html',
 }
+
 files {
     'nui/ui.html',
     'nui/css/main.css',

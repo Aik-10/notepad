@@ -9,7 +9,7 @@ local NotepadText = "~g~E~s~ to read,~g~G~s~ to destroy"
 Citizen.CreateThread(function()
     while ESX == nil do
         TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-        Citizen.Wait(0) -- Delete This
+        Wait(0)
     end
 end)
 
@@ -26,7 +26,6 @@ function DrawText3Ds(x,y,z, text)
     DrawText(_x,_y)
     local factor = (string.len(text)) / 370
     DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, 41, 11, 41, 68)
-
 end
 
 RegisterNUICallback('escape', function(data, cb)
@@ -36,7 +35,7 @@ end)
 
 RegisterNUICallback('updating', function(data, cb)
     local text = data.text
-    TriggerServerEvent("server:updateNote",editingNotpadId, text)
+    TriggerServerEvent("server:updateNote", editingNotpadId, text)
     editingNotpadId = nil
     TriggerEvent("lkrp_notepad:CloseNotepad")
 end)
@@ -48,7 +47,7 @@ end)
 RegisterNUICallback('dropping', function(data, cb)
     local text = data.text
     local location = GetEntityCoords(GetPlayerPed(-1))
-    TriggerServerEvent("server:newNote",text,location["x"],location["y"],location["z"])
+    TriggerServerEvent("server:newNote", text,location["x"], location["y"], location["z"])
     TriggerEvent("lkrp_notepad:CloseNotepad")
 end)
 
@@ -67,7 +66,7 @@ AddEventHandler("lkrp_notepad:CloseNotepad", function()
     SetPlayerControl(PlayerId(), 1, 0)
     isUiOpen = false
     SetNuiFocus(false, false);
-    TaskPlayAnim( player, ad, "exit", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
+    TaskPlayAnim(PlayerPedId(), ad, "exit", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
     Citizen.Wait(100)
     ClearPedSecondaryTask(PlayerPedId())
     DetachEntity(prop, 1, 1)
@@ -88,7 +87,7 @@ AddEventHandler('lkrp_notepad:note', function()
         loadAnimDict( ad )
         if ( IsEntityPlayingAnim( player, ad, "base", 3 ) ) then 
             TaskPlayAnim( player, ad, "exit", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
-            Citizen.Wait(100)
+            Wait(100)
             ClearPedSecondaryTask(PlayerPedId())
             DetachEntity(prop, 1, 1)
             DeleteObject(prop)
@@ -108,7 +107,7 @@ end)
 function loadAnimDict(dict)
     while (not HasAnimDictLoaded(dict)) do
         RequestAnimDict(dict)
-        Citizen.Wait(5)
+        Wait(5)
     end
 end
 
@@ -118,8 +117,8 @@ AddEventHandler('lkrp_notepad:updateNotes', function(serverNotesPassed)
 end)
 
 function openGui() 
-    local veh = GetVehiclePedIsUsing(GetPlayerPed(-1))  
-    if GetPedInVehicleSeat(veh, -1) ~= GetPlayerPed(-1) then
+    local veh = GetVehiclePedIsUsing(PlayerPedId())  
+    if GetPedInVehicleSeat(veh, -1) ~= PlayerPedId() then
         SetPlayerControl(PlayerId(), 0, 0)
         SendNUIMessage({
             action = 'openNotepad',
@@ -130,8 +129,8 @@ function openGui()
 end
 
 function openGuiRead(text)
-  local veh = GetVehiclePedIsUsing(GetPlayerPed(-1))
-  if GetPedInVehicleSeat(veh, -1) ~= GetPlayerPed(-1) then
+  local veh = GetVehiclePedIsUsing(PlayerPedId())
+  if GetPedInVehicleSeat(veh, -1) ~= PlayerPedId() then
         SetPlayerControl(PlayerId(), 0, 0)
         TriggerEvent("lkrp_notepad:note")
         isUiOpen = true
@@ -146,13 +145,13 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1)
+        Wait(1)
         if #TestLocalTable == 0 then
-            Citizen.Wait(1000)
+            Wait(1000)
         else
             local closestNoteDistance = 900.0
             local closestNoteId = 0
-            local plyLoc = GetEntityCoords(GetPlayerPed(-1))
+            local plyLoc = GetEntityCoords(PlayerPedId())
             for i = 1, #TestLocalTable do
                 local distance = GetDistanceBetweenCoords(plyLoc["x"], plyLoc["y"], plyLoc["z"], TestLocalTable[i]["x"],TestLocalTable[i]["y"],TestLocalTable[i]["z"], true)
                 if distance < 10.0 then
@@ -164,7 +163,7 @@ Citizen.CreateThread(function()
                 end
             end
             if closestNoteDistance > 100.0 then
-                Citizen.Wait(math.ceil(closestNoteDistance*10))
+                Wait(math.ceil(closestNoteDistance*10))
             end
             if TestLocalTable[closestNoteId] ~= nil then
             local distance = GetDistanceBetweenCoords(plyLoc, TestLocalTable[closestNoteId]["x"],TestLocalTable[closestNoteId]["y"],TestLocalTable[closestNoteId]["z"], true)

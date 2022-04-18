@@ -4,7 +4,7 @@ local savedNotes = {}
 TriggerEvent('server:LoadsNote')
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
---#Delete comments to use from inventory
+--#Delete comments to use as an item
 -- ESX.RegisterUsableItem('notepad', function(source)
 --   local _source  = source
 --   local xPlayer   = ESX.GetPlayerFromId(_source)
@@ -25,6 +25,18 @@ else
 end
     
 end, {help = "Open notepad if you have it!"})
+
+ESX.RegisterCommand('notes', 'admin', function(xPlayer, args, showError)
+  local source = source
+  local item    = xPlayer.getInventoryItem('notepad').count
+if item > 0 then
+    TriggerClientEvent('lkrp_notepad:note', source)
+    TriggerClientEvent('lkrp_notepad:OpenNotepadGui', source)
+    TriggerEvent('server:LoadsNote')
+else
+     TriggerClientEvent('esx:showNotification', source, 'You dont have notepad.')
+end
+end, true, {help = 'Open notepad if you have it!', validate = true, arguments = {}})
 
 
 RegisterNetEvent("server:LoadsNote")
